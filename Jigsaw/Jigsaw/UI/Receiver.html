@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Receiver:</h1>
+    <table class="puzzle">
+        <tr>
+            <td><img class="slot-1" class="img" /></td>
+            <td><img class="slot-2" class="img" /></td>
+        </tr>
+        <tr>
+            <td><img class="slot-3" class="img" /></td>
+            <td><img class="slot-4" class="img" /></td>
+        </tr>
+    </table>
+</body>
+
+</html>
+<script>
+
+    $(document).ready(function () {
+
+        const imageSource = "/UI/Images/";
+
+        $.get("/Game/id?id=1", function (data, status) {
+            //console.log(data);
+
+            $("[class^='slot']").each(function (i, e) {
+                this.src = imageSource + data.currentState[i] + ".jpg";
+                console.log(this);
+                this.onclick = function(){
+                    alert(this.className + " " + this.src);
+                }
+            })
+        });
+
+
+    });
+</script>

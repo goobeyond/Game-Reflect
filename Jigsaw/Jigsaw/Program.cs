@@ -1,6 +1,7 @@
 using Jigsaw;
 using Jigsaw.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,12 @@ builder.Services.AddDbContext<GameContext>(options =>
 
 var app = builder.Build();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "UI")),
+    RequestPath = "/UI"
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
