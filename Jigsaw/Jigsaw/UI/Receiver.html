@@ -5,28 +5,9 @@
     <!-- Entire bundle -->
     <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js"></script>
     <style>
-        .grid {
-            display: grid;
-            grid-template: 150px 150px 150px / 150px 150px 150px 150px;
-            grid-gap: 10px;
-            background-color: #ffffff;
-            padding: 10px;
-        }
-
-        .draggable {
-            background-color: #ff3946;
-            box-shadow: 10px 10px 10px #7777;
-        }
-
-        .draggable,
-        .droppable.draggable-dropzone--occupied {
-            width: 100px;
-            height: 100px;
-        }
-
-        .droppable {
-            width: 100px;
-            height: 100px;
+       .droppable {
+            width: 200px;
+            height: 200px;
             border: solid;
             display: flex;
         }
@@ -38,18 +19,18 @@
     <table class="puzzle">
         <tr>
             <td>
-                <div><img class="slot-1" class="img" /></div>
+                <div class="droppable"><img class="slot-1" class="img" /></div>
             </td>
             <td>
-                <div><img class="slot-2" class="img" /></div>
+                <div class="droppable"><img class="slot-2" class="img" /></div>
             </td>
         </tr>
         <tr>
             <td>
-                <div><img class="slot-3" class="img" /></div>
+                <div class="droppable"><img class="slot-3" class="img" /></div>
             </td>
             <td>
-                <div><img class="slot-4" class="img" /></div>
+                <div class="droppable"><img class="slot-4" class="img" /></div>
             </td>
         </tr>
     </table>
