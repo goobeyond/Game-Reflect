@@ -5,7 +5,7 @@
     <!-- Entire bundle -->
     <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js"></script>
     <style>
-       .droppable {
+        .droppable {
             width: 200px;
             height: 200px;
             border: solid;
@@ -18,19 +18,19 @@
     <h1>Receiver:</h1>
     <table class="puzzle">
         <tr>
-            <td>
-                <div class="droppable"><img class="slot-1" class="img" /></div>
+            <td class="slot-1">
+                <div class="droppable"><img class="img" /></div>
             </td>
-            <td>
-                <div class="droppable"><img class="slot-2" class="img" /></div>
+            <td class="slot-2">
+                <div class="droppable"><img class="img" /></div>
             </td>
         </tr>
         <tr>
-            <td>
-                <div class="droppable"><img class="slot-3" class="img" /></div>
+            <td class="slot-3">
+                <div class="droppable"><img class="img" /></div>
             </td>
-            <td>
-                <div class="droppable"><img class="slot-4" class="img" /></div>
+            <td class="slot-4">
+                <div class="droppable"><img class="img" /></div>
             </td>
         </tr>
     </table>
@@ -61,16 +61,48 @@
 
     swappable.on('swappable:start', () => console.log('swappable:start'));
     swappable.on('swappable:swapped', () => console.log('swappable:swapped'));
-    swappable.on('swappable:stop', () => console.log('swappable:stop'));
+    swappable.on('swappable:stop', updateAnswer);
+
+    function updateAnswer() {
+        let currentData = new Set();
+
+        $(".img").each(function (i, e) {
+            currentData.add(this.src[this.src.search(".jpg") - 1]);
+        })
+        
+        var currentState = [...currentData];
+        console.log(currentState);
+
+        var data =
+        {
+            "id": 0,
+            "answer": [
+                0
+            ],
+            currentState
+        }
+
+        console.log(data);
+
+        $.ajax({
+            url: '/Game/1',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response)
+            }
+        });
+    };
 
     $(document).ready(function () {
 
         const imageSource = "/UI/Images/";
 
-        $.get("/Game/id?id=1", function (data, status) {
+        $.get("/Game/1", function (data, status) {
             //console.log(data);
 
-            $("[class^='slot']").each(function (i, e) {
+            $("img").each(function (i, e) {
                 this.src = imageSource + data.currentState[i] + ".jpg";
                 //console.log(this);
                 this.onclick = function () {

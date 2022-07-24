@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Entire bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.8/lib/draggable.bundle.js"></script>
+    <style>
+        .droppable {
+            width: 200px;
+            height: 200px;
+            border: solid;
+            display: flex;
+        }
+
+        .correct {
+            width: 200px;
+            height: 200px;
+            border: solid;
+            display: flex;
+            border-color: green;
+            border-width: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Sender:</h1>
+    <table class="puzzle">
+        <tr>
+            <td class="slot-1">
+                <div class="droppable"><img class="img" /></div>
+            </td>
+            <td class="slot-2">
+                <div class="droppable"><img class="img" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="slot-3">
+                <div class="droppable"><img class="img" /></div>
+            </td>
+            <td class="slot-4">
+                <div class="droppable"><img class="img" /></div>
+            </td>
+        </tr>
+    </table>
+
+    <button id="reset">Reset</button>
+
+</body>
+
+</html>
+<script>
+
+    const imageSource = "/UI/Images/";
+
+    $("#reset").click(function(){
+        $.ajax({
+            url: "/Game/reset/1", 
+            type: 'PUT',
+            success: function(data, status){
+                alert("reset the game");
+        }});
+    })
+
+    function getImage() {
+        $.get("/Game/1", function (data, status) {
+            $("img").each(function (i, e) {
+                this.src = imageSource + data.currentState[i] + ".jpg";
+                this.onclick = function () {
+                    alert(this.className + " " + this.src);
+                }
+                console.log(data);
+                if (data.currentState[i] == data.answer[i]){
+                    $(this).addClass("correct");
+                }else
+                {
+                    $(this).removeClass("correct");
+                }
+            })
+        });
+    }
+
+    
+
+    $(document).ready(function () {
+        getImage();
+        var intervalId = window.setInterval(getImage, 5000);
+    })
+</script>
