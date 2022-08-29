@@ -30,6 +30,4 @@ namespace Jigsaw.Database
 
         public DbSet<Game> Games { get; set; }
     }
-
-
 }

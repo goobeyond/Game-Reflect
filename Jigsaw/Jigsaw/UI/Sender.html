@@ -66,11 +66,11 @@
     function getImage() {
         $.get("/Game/1", function (data, status) {
             $("img").each(function (i, e) {
-                this.src = imageSource + data.currentState[i] + ".jpg";
+                this.src = imageSource + data.answer[i] + ".jpg";
                 this.onclick = function () {
                     alert(this.className + " " + this.src);
                 }
-                console.log(data);
+                //console.log(data);
                 if (data.currentState[i] == data.answer[i]){
                     $(this).addClass("correct");
                 }else
